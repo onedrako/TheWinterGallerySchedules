@@ -1,4 +1,4 @@
-const { Model, DataTypes, sequelize } = require('sequelize')
+const { Model, DataTypes, Sequelize } = require('sequelize')
 
 const NOTES_TABLE = 'notes_model'
 
@@ -21,13 +21,13 @@ const NoteSchema = {
     allowNull: false,
     field: 'created_at',
     type: DataTypes.DATE,
-    defaultValue: sequelize.NOW
+    defaultValue: Sequelize.NOW
   },
   updatedAt: {
     allowNull: false,
     field: 'updated_at',
     type: DataTypes.DATE,
-    defaultValue: sequelize.NOW
+    defaultValue: Sequelize.NOW
   },
   updatedBy: {
     field: 'updated_by',
