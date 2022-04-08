@@ -1,5 +1,8 @@
 const { Model, DataTypes, Sequelize } = require('sequelize')
 
+const { SCHEDULE_TABLE } = require('./schedule.model')
+const { NOTE_TABLE } = require('./note.model')
+
 const DAY_TABLE = 'dates_model'
 
 const DaySchema = {
@@ -39,7 +42,7 @@ const DaySchema = {
     field: 'schedule_id',
     type: DataTypes.INTEGER,
     references: {
-      model: 'schedules',
+      model: SCHEDULE_TABLE,
       key: 'id'
     },
     onUpdate: 'CASCADE',
@@ -47,10 +50,10 @@ const DaySchema = {
   },
   noteId: {
     allowNull: true,
-    field: 'comment_id',
+    field: 'note_id',
     type: DataTypes.INTEGER,
     references: {
-      model: 'comments',
+      model: NOTE_TABLE,
       key: 'id'
     },
     onUpdate: 'CASCADE',

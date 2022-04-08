@@ -8,59 +8,16 @@ const { BACKGROUND_TABLE } = require('../models/background.model')
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable(DAY_TABLE, {
+    await queryInterface.createTable(BACKGROUND_TABLE, {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.DataTypes.INTEGER
       },
-      date: {
-        type: Sequelize.DataTypes.DATEONLY,
-        allowNull: true
-      },
-      title: {
-        type: Sequelize.DataTypes.STRING,
-        allowNull: true
-      },
-      createdAt: {
-        allowNull: false,
-        field: 'created_at',
-        defaultValue: Sequelize.NOW,
-        type: Sequelize.DataTypes.DATE
-      },
-      updatedAt: {
-        allowNull: false,
-        field: 'updated_at',
-        defaultValue: Sequelize.NOW,
-        type: Sequelize.DataTypes.DATE
-      },
-      updatedBy: {
-        field: 'updated_by',
-        allowNull: false,
+      url: {
+        allowNull: true,
         type: Sequelize.DataTypes.STRING
-      },
-      scheduleId: {
-        allowNull: true,
-        field: 'schedule_id',
-        type: Sequelize.DataTypes.INTEGER,
-        references: {
-          model: 'schedules',
-          key: 'id'
-        },
-        onUpdate: 'CASCADE',
-        onDelete: 'SET NULL'
-      },
-      noteId: {
-        allowNull: true,
-        field: 'comment_id',
-        type: Sequelize.DataTypes.INTEGER,
-        references: {
-          model: 'comments',
-          key: 'id'
-        },
-        onUpdate: 'CASCADE',
-        onDelete: 'SET NULL'
       }
     })
 
@@ -169,16 +126,68 @@ module.exports = {
       }
     })
 
-    await queryInterface.createTable(BACKGROUND_TABLE, {
-
+    await queryInterface.createTable(DAY_TABLE, {
+      id: {
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+        type: Sequelize.DataTypes.INTEGER
+      },
+      date: {
+        type: Sequelize.DataTypes.DATEONLY,
+        allowNull: true
+      },
+      title: {
+        type: Sequelize.DataTypes.STRING,
+        allowNull: true
+      },
+      createdAt: {
+        allowNull: false,
+        field: 'created_at',
+        defaultValue: Sequelize.NOW,
+        type: Sequelize.DataTypes.DATE
+      },
+      updatedAt: {
+        allowNull: false,
+        field: 'updated_at',
+        defaultValue: Sequelize.NOW,
+        type: Sequelize.DataTypes.DATE
+      },
+      updatedBy: {
+        field: 'updated_by',
+        allowNull: false,
+        type: Sequelize.DataTypes.STRING
+      },
+      scheduleId: {
+        allowNull: true,
+        field: 'schedule_id',
+        type: Sequelize.DataTypes.INTEGER,
+        references: {
+          model: SCHEDULE_TABLE,
+          key: 'id'
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'SET NULL'
+      },
+      noteId: {
+        allowNull: true,
+        field: 'note_id',
+        type: Sequelize.DataTypes.INTEGER,
+        references: {
+          model: NOTE_TABLE,
+          key: 'id'
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'SET NULL'
+      }
     })
   },
 
   down: async (queryInterface) => {
     await queryInterface.dropTable(BACKGROUND_TABLE)
-    await queryInterface.dropTable(SCHEDULE_NOTE_TABLE)
-    await queryInterface.dropTable(NOTE_TABLE)
     await queryInterface.dropTable(SCHEDULE_TABLE)
+    await queryInterface.dropTable(NOTE_TABLE)
+    await queryInterface.dropTable(SCHEDULE_NOTE_TABLE)
     await queryInterface.dropTable(DAY_TABLE)
   }
 }
