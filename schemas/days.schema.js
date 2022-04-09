@@ -7,6 +7,18 @@ const updatedBy = Joi.string()
 const noteId = Joi.Joi.alternatives().try(Joi.number().integer(), Joi.allow(null))
 const scheduleId = Joi.alternatives().try(Joi.number().integer(), Joi.allow(null))
 
+// const listOfAllDays = Joi.object().items({ id, date, title, updatedBy, noteId, scheduleId })
+
+const listOfDays = Joi.array().items(
+  Joi.object().items(
+    {
+      date: date,
+      title: title,
+      updatedBy: updatedBy.required(),
+      noteId: noteId,
+      scheduleId: scheduleId
+    }))
+
 const createDaySchema = Joi.object({
   date: date.required(),
   title: title.default(null),
@@ -23,8 +35,17 @@ const updateDaySchema = Joi.object({
   updatedBy: updatedBy.required()
 })
 
+const updateAllDaysSchema = Joi.object({
+  listOfDays: listOfDays.required()
+})
+
 const getDaySchema = Joi.object({
   id: id.required()
 })
 
-module.exports = { createDaySchema, updateDaySchema, getDaySchema }
+module.exports = {
+  createDaySchema,
+  updateDaySchema,
+  updateAllDaysSchema,
+  getDaySchema
+}
