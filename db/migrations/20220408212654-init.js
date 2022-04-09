@@ -1,10 +1,11 @@
 'use strict'
 
-const { DAY_TABLE } = require('../models/day.model')
-const { SCHEDULE_TABLE } = require('../models/schedule.model')
-const { NOTE_TABLE } = require('../models/note.model')
-const { SCHEDULE_NOTE_TABLE } = require('../models/schedule-note.model')
-const { BACKGROUND_TABLE } = require('../models/background.model')
+const { DAY_TABLE } = require('../models/days.model')
+const { SCHEDULE_TABLE } = require('../models/schedules.model')
+const { NOTE_TABLE } = require('../models/notes.model')
+const { SCHEDULE_NOTE_TABLE } = require('../models/schedules-notes.model')
+const { BACKGROUND_TABLE } = require('../models/backgrounds.model')
+const { USER_TABLE } = require('../models/users.model')
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
@@ -13,11 +14,11 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.DataTypes.INTEGER
+        type: Sequelize.Sequelize.DataTypes.INTEGER
       },
       url: {
         allowNull: true,
-        type: Sequelize.DataTypes.STRING
+        type: Sequelize.Sequelize.DataTypes.STRING
       }
     })
 
@@ -26,38 +27,32 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.DataTypes.INTEGER
+        type: Sequelize.Sequelize.DataTypes.INTEGER
       },
       title: {
         allowNull: false,
-        type: Sequelize.DataTypes.STRING
+        type: Sequelize.Sequelize.DataTypes.STRING
       },
       initialTime: {
         allowNull: false,
         field: 'initial_time',
-        type: Sequelize.DataTypes.TIME
+        type: Sequelize.Sequelize.DataTypes.TIME
       },
       finalTime: {
         allowNull: false,
         field: 'final_time',
-        type: Sequelize.DataTypes.TIME
-      },
-      createdAt: {
-        allowNull: false,
-        field: 'created_at',
-        type: Sequelize.DataTypes.DATE,
-        defaultValue: Sequelize.NOW
+        type: Sequelize.Sequelize.DataTypes.TIME
       },
       updatedAt: {
         allowNull: false,
         field: 'updated_at',
-        type: Sequelize.DataTypes.DATE,
+        type: Sequelize.Sequelize.DataTypes.DATE,
         defaultValue: Sequelize.NOW
       },
       updatedBy: {
         field: 'updated_by',
         allowNull: false,
-        type: Sequelize.DataTypes.STRING
+        type: Sequelize.Sequelize.DataTypes.STRING
       }
     })
 
@@ -66,32 +61,26 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.DataTypes.INTEGER
+        type: Sequelize.Sequelize.DataTypes.INTEGER
       },
       title: {
         allowNull: true,
-        type: Sequelize.DataTypes.STRING
+        type: Sequelize.Sequelize.DataTypes.STRING
       },
       comment: {
         allowNull: true,
-        type: Sequelize.DataTypes.STRING
-      },
-      createdAt: {
-        allowNull: false,
-        field: 'created_at',
-        type: Sequelize.DataTypes.DATE,
-        defaultValue: Sequelize.NOW
+        type: Sequelize.Sequelize.DataTypes.STRING
       },
       updatedAt: {
         allowNull: false,
         field: 'updated_at',
-        type: Sequelize.DataTypes.DATE,
+        type: Sequelize.Sequelize.DataTypes.DATE,
         defaultValue: Sequelize.NOW
       },
       updatedBy: {
         field: 'updated_by',
         allowNull: false,
-        type: Sequelize.DataTypes.STRING
+        type: Sequelize.Sequelize.DataTypes.STRING
       }
     })
 
@@ -100,12 +89,12 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.DataTypes.INTEGER
+        type: Sequelize.Sequelize.DataTypes.INTEGER
       },
       scheduleId: {
         allowNull: false,
         field: 'schedule_id',
-        type: Sequelize.DataTypes.INTEGER,
+        type: Sequelize.Sequelize.DataTypes.INTEGER,
         references: {
           model: SCHEDULE_TABLE,
           key: 'id'
@@ -116,7 +105,7 @@ module.exports = {
       noteId: {
         allowNull: false,
         field: 'note_id',
-        type: Sequelize.DataTypes.INTEGER,
+        type: Sequelize.Sequelize.DataTypes.INTEGER,
         references: {
           model: NOTE_TABLE,
           key: 'id'
@@ -131,37 +120,31 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.DataTypes.INTEGER
+        type: Sequelize.Sequelize.DataTypes.INTEGER
       },
       date: {
-        type: Sequelize.DataTypes.DATEONLY,
+        type: Sequelize.Sequelize.DataTypes.DATEONLY,
         allowNull: true
       },
       title: {
-        type: Sequelize.DataTypes.STRING,
+        type: Sequelize.Sequelize.DataTypes.STRING,
         allowNull: true
-      },
-      createdAt: {
-        allowNull: false,
-        field: 'created_at',
-        defaultValue: Sequelize.NOW,
-        type: Sequelize.DataTypes.DATE
       },
       updatedAt: {
         allowNull: false,
         field: 'updated_at',
         defaultValue: Sequelize.NOW,
-        type: Sequelize.DataTypes.DATE
+        type: Sequelize.Sequelize.DataTypes.DATE
       },
       updatedBy: {
         field: 'updated_by',
         allowNull: false,
-        type: Sequelize.DataTypes.STRING
+        type: Sequelize.Sequelize.DataTypes.STRING
       },
       scheduleId: {
         allowNull: true,
         field: 'schedule_id',
-        type: Sequelize.DataTypes.INTEGER,
+        type: Sequelize.Sequelize.DataTypes.INTEGER,
         references: {
           model: SCHEDULE_TABLE,
           key: 'id'
@@ -172,7 +155,7 @@ module.exports = {
       noteId: {
         allowNull: true,
         field: 'note_id',
-        type: Sequelize.DataTypes.INTEGER,
+        type: Sequelize.Sequelize.DataTypes.INTEGER,
         references: {
           model: NOTE_TABLE,
           key: 'id'
@@ -181,13 +164,53 @@ module.exports = {
         onDelete: 'SET NULL'
       }
     })
+
+    await queryInterface.createTable(USER_TABLE, {
+      id: {
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+        type: Sequelize.DataTypes.INTEGER
+      },
+      nickName: {
+        allowNull: false,
+        type: Sequelize.DataTypes.STRING,
+        unique: true
+      },
+      email: {
+        allowNull: false,
+        type: Sequelize.DataTypes.STRING,
+        unique: true
+      },
+      password: {
+        allowNull: false,
+        type: Sequelize.DataTypes.STRING,
+        min: 8
+      },
+      role: {
+        allowNull: false,
+        type: Sequelize.DataTypes.STRING,
+        defaultValue: 'user'
+      },
+      recoveryToken: {
+        allowNull: true,
+        type: Sequelize.DataTypes.STRING
+      },
+      updateAt: {
+        allowNull: false,
+        type: Sequelize.DataTypes.DATE,
+        field: 'updated_at',
+        defaultValue: Sequelize.NOW
+      }
+    })
   },
 
   down: async (queryInterface) => {
     await queryInterface.dropTable(BACKGROUND_TABLE)
-    await queryInterface.dropTable(SCHEDULE_TABLE)
-    await queryInterface.dropTable(NOTE_TABLE)
-    await queryInterface.dropTable(SCHEDULE_NOTE_TABLE)
     await queryInterface.dropTable(DAY_TABLE)
+    await queryInterface.dropTable(SCHEDULE_NOTE_TABLE)
+    await queryInterface.dropTable(NOTE_TABLE)
+    await queryInterface.dropTable(SCHEDULE_TABLE)
+    await queryInterface.dropTable(USER_TABLE)
   }
 }

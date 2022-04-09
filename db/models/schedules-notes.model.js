@@ -1,8 +1,8 @@
 const { Model, DataTypes } = require('sequelize')
-const { SCHEDULE_TABLE } = require('./schedule.model')
-const { NOTE_TABLE } = require('./note.model')
+const { SCHEDULE_TABLE } = require('./schedules.model')
+const { NOTE_TABLE } = require('./notes.model')
 
-const SCHEDULE_NOTE_TABLE = 'schedule_notes_model'
+const SCHEDULE_NOTE_TABLE = 'schedule_notes'
 
 const ScheduleNoteSchema = {
   id: {

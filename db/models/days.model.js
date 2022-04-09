@@ -1,9 +1,9 @@
 const { Model, DataTypes, Sequelize } = require('sequelize')
 
-const { SCHEDULE_TABLE } = require('./schedule.model')
-const { NOTE_TABLE } = require('./note.model')
+const { SCHEDULE_TABLE } = require('./schedules.model')
+const { NOTE_TABLE } = require('./notes.model')
 
-const DAY_TABLE = 'dates_model'
+const DAY_TABLE = 'days'
 
 const DaySchema = {
   id: {
@@ -19,12 +19,6 @@ const DaySchema = {
   title: {
     type: DataTypes.STRING,
     allowNull: true
-  },
-  createdAt: {
-    allowNull: false,
-    field: 'created_at',
-    defaultValue: Sequelize.NOW,
-    type: DataTypes.DATE
   },
   updatedAt: {
     allowNull: false,

@@ -1,6 +1,6 @@
 const { Model, DataTypes, Sequelize } = require('sequelize')
 
-const SCHEDULE_TABLE = 'schedules_model'
+const SCHEDULE_TABLE = 'schedules'
 
 const ScheduleSchema = {
   id: {
@@ -22,12 +22,6 @@ const ScheduleSchema = {
     allowNull: false,
     field: 'final_time',
     type: DataTypes.TIME
-  },
-  createdAt: {
-    allowNull: false,
-    field: 'created_at',
-    type: DataTypes.DATE,
-    defaultValue: Sequelize.NOW
   },
   updatedAt: {
     allowNull: false,

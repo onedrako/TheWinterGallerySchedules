@@ -1,6 +1,6 @@
 const { Model, DataTypes, Sequelize } = require('sequelize')
 
-const NOTE_TABLE = 'notes_model'
+const NOTE_TABLE = 'notes'
 
 const NoteSchema = {
   id: {
@@ -16,12 +16,6 @@ const NoteSchema = {
   comment: {
     allowNull: true,
     type: DataTypes.STRING
-  },
-  createdAt: {
-    allowNull: false,
-    field: 'created_at',
-    type: DataTypes.DATE,
-    defaultValue: Sequelize.NOW
   },
   updatedAt: {
     allowNull: false,
@@ -53,7 +47,7 @@ class Note extends Model {
   static config (sequelize) {
     return {
       sequelize,
-      tableName: NOTES_TABLE,
+      tableName: NOTE_TABLE,
       modelName: 'Note',
       timeStamps: false
     }

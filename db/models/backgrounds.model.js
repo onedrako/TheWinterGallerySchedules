@@ -1,6 +1,6 @@
 const { Model, DataTypes } = require('sequelize')
 
-const BACKGROUND_TABLE = 'backgrounds_model'
+const BACKGROUND_TABLE = 'backgrounds'
 
 const BackgroundSchema = {
   id: {
