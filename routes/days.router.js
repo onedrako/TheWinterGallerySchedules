@@ -16,6 +16,18 @@ router.get('/', async (req, res, next) => {
   }
 })
 
+router.get('/:id',
+  validatorHandler(getDaySchema),
+  async (req, res, next) => {
+    try {
+      const { id } = req.params
+      const day = await service.getById(id)
+      res.send(day)
+    } catch (err) {
+      next(err)
+    }
+  })
+
 router.post('/',
   validatorHandler(createDaySchema, 'body'),
   async (req, res, next) => {

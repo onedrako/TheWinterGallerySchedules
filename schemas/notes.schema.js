@@ -6,8 +6,8 @@ const comment = Joi.alternatives().try(Joi.string(), Joi.allow(null))
 const updatedBy = Joi.string()
 
 const createNoteSchema = Joi.object({
-  title: title.required(),
-  comment: comment.required(),
+  title: title,
+  comment: comment,
   updatedBy: updatedBy.required()
 })
 

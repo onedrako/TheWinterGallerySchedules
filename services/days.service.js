@@ -18,7 +18,11 @@ class DaysServices {
           id
         }
       })
-      return day
+      if (day) {
+        return day
+      } else {
+        throw boom.notFound('No se encontró el día')
+      }
     } catch (error) {
       throw boom.notFound('No se encontró el día')
     }

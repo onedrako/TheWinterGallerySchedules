@@ -4,6 +4,7 @@ const validatorHandler = require('./../middlewares/validator.handler')
 const NotesService = require('./../services/notes.service')
 
 const router = express.Router()
+const boom = require('@hapi/boom')
 const service = new NotesService()
 const { createNoteSchema, updateNoteSchema, getNoteSchema } = require('./../schemas/notes.schema')
 
@@ -21,7 +22,10 @@ router.get('/:id',
   async (req, res, next) => {
     try {
       const { id } = req.params
-      const note = await service.getOne(id)
+      const note = await service.getById(id)
+      if (!note) {
+        throw boom.notFound('No se encontró la nota')
+      }
       res.send(note)
     } catch (err) {
       next(err)
@@ -44,7 +48,7 @@ router.patch('/:id',
   async (req, res, next) => {
     try {
       const { id } = req.params
-      const note = await service.update(id, req.body)
+      const note = await service.updateOne(id, req.body)
       res.status(201).send(note)
     } catch (err) {
       next(err)
@@ -56,8 +60,8 @@ router.delete('/:id',
   async (req, res, next) => {
     try {
       const { id } = req.params
-      await service.delete(id)
-      res.sendStatus(204)
+      await service.deleteOne(id)
+      res.status(204).send(id)
     } catch (err) {
       next(err)
     }
