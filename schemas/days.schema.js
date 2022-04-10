@@ -1,23 +1,23 @@
 const Joi = require('joi')
 
 const id = Joi.number().integer()
-const date = Joi.date().format('DD-MM-YYYY')
+const date = Joi.date()
 const title = Joi.alternatives().try(Joi.string(), Joi.allow(null))
 const updatedBy = Joi.string()
-const noteId = Joi.Joi.alternatives().try(Joi.number().integer(), Joi.allow(null))
+const noteId = Joi.alternatives().try(Joi.number().integer(), Joi.allow(null))
 const scheduleId = Joi.alternatives().try(Joi.number().integer(), Joi.allow(null))
 
 // const listOfAllDays = Joi.object().items({ id, date, title, updatedBy, noteId, scheduleId })
 
 const listOfDays = Joi.array().items(
-  Joi.object().items(
-    {
-      date: date,
-      title: title,
-      updatedBy: updatedBy.required(),
-      noteId: noteId,
-      scheduleId: scheduleId
-    }))
+  Joi.object({
+    date: date,
+    title: title,
+    updatedBy: updatedBy.required(),
+    noteId: noteId,
+    scheduleId: scheduleId
+  })
+)
 
 const createDaySchema = Joi.object({
   date: date.required(),

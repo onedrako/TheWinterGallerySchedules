@@ -1,5 +1,5 @@
 const express = require('express')
-const { validatorHandler } = require('../utils/middleware')
+const validatorHandler = require('./../middlewares/validator.handler')
 
 const BackgroundService = require('../services/background.service')
 

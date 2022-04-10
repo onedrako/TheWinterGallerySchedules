@@ -2,8 +2,8 @@ const Joi = require('joi')
 
 const id = Joi.number().integer()
 const title = Joi.string()
-const initialTime = Joi.date().format('HH:mm')
-const finalTime = Joi.date().format('HH:mm')
+const initialTime = Joi.date()
+const finalTime = Joi.date()
 const updatedBy = Joi.string()
 
 const createScheduleSchema = Joi.object({

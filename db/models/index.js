@@ -14,7 +14,6 @@ const setUpModels = (sequelize) => {
   Day.associate(sequelize.models)
   Schedule.associate(sequelize.models)
   Note.associate(sequelize.models)
-  Background.associate(sequelize.models)
   ScheduleNote.associate(sequelize.models)
 }
 
