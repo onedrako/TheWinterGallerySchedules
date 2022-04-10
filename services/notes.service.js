@@ -4,7 +4,7 @@ const { models } = require('../libs/sequelize')
 class NotesServices {
   async getAll () {
     try {
-      const notes = await models.Notes.findAll()
+      const notes = await models.Note.findAll()
       return notes
     } catch (error) {
       throw boom.notFound('No hay notas registrados')
@@ -13,7 +13,7 @@ class NotesServices {
 
   async getById (id) {
     try {
-      const note = await models.Notes.findOne({
+      const note = await models.Note.findOne({
         where: {
           id
         }
@@ -26,7 +26,7 @@ class NotesServices {
 
   async create (note) {
     try {
-      const newNote = await models.Notes.create(note)
+      const newNote = await models.Note.create(note)
       return newNote
     } catch (error) {
       throw boom.badRequest('No se pudo crear la nota')
@@ -35,7 +35,7 @@ class NotesServices {
 
   async updateOne (id, note) {
     try {
-      const updatedNote = await models.Notes.update(note, {
+      const updatedNote = await models.Note.update(note, {
         where: {
           id
         }
@@ -48,7 +48,7 @@ class NotesServices {
 
   async deleteOne (id) {
     try {
-      const deletedNote = await models.Notes.destroy({
+      const deletedNote = await models.Note.destroy({
         where: {
           id
         }

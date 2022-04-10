@@ -7,6 +7,8 @@ const routerApi = require('./routes')
 const app = express()
 const port = config.port
 
+const { logErrors, errorHandler, boomErrorHandler, ormErrorHandler } = require('./middlewares/error.handler')
+
 app.use(express.json())
 
 const whiteList = ['http://localhost:3000', 'http://localhost:3005']
@@ -27,6 +29,11 @@ app.use(cors(corsOptions))
 // app.use(passport.initialize())
 
 routerApi(app)
+
+app.use(logErrors)
+app.use(ormErrorHandler)
+app.use(boomErrorHandler)
+app.use(errorHandler)
 
 app.listen(port, () => {
   console.log(`Server listening on port ${port}`)

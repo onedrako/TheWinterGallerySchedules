@@ -66,7 +66,7 @@ class Day extends Model {
       sequelize,
       tableName: DAY_TABLE,
       modelName: 'Day',
-      timeStamps: false
+      timestamps: false
     }
   }
 }

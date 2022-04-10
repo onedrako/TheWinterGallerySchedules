@@ -45,7 +45,7 @@ class ScheduleNote extends Model {
       sequelize,
       tableName: SCHEDULE_NOTE_TABLE,
       modelName: 'ScheduleNote',
-      timeStamps: false
+      timestamps: false
     }
   }
 }

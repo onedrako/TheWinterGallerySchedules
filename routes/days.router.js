@@ -20,6 +20,7 @@ router.post('/',
   validatorHandler(createDaySchema, 'body'),
   async (req, res, next) => {
     try {
+      console.log(req.body)
       const day = await service.create(req.body)
       res.status(201).send(day)
     } catch (err) {

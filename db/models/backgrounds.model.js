@@ -21,7 +21,7 @@ class Background extends Model {
       sequelize,
       tableName: BACKGROUND_TABLE,
       modelName: 'Background',
-      timeStamps: false
+      timestamps: false
     }
   }
 }

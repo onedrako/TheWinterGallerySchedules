@@ -4,7 +4,7 @@ const { models } = require('../libs/sequelize')
 class DaysServices {
   async getAll () {
     try {
-      const days = await models.Days.findAll()
+      const days = await models.Day.findAll()
       return days
     } catch (error) {
       throw boom.notFound('No hay días registrados')
@@ -13,7 +13,7 @@ class DaysServices {
 
   async getById (id) {
     try {
-      const day = await models.Days.findOne({
+      const day = await models.Day.findOne({
         where: {
           id
         }
@@ -24,18 +24,15 @@ class DaysServices {
     }
   }
 
-  async create (day) {
-    try {
-      const newDay = await models.Days.create(day)
-      return newDay
-    } catch (error) {
-      throw boom.badRequest('No se pudo crear el día')
-    }
+  async create (data) {
+    console.log(data)
+    const response = await models.Day.create(data)
+    return response
   }
 
   async updateOne (id, changes) {
     try {
-      const updatedDay = await models.Days.update(changes, {
+      const updatedDay = await models.Day.update(changes, {
         where: {
           id
         }
@@ -48,7 +45,7 @@ class DaysServices {
 
   async updateAll (listOfDays) {
     try {
-      const updatedDays = await models.Days.bulkCreate(listOfDays)
+      const updatedDays = await models.Day.bulkCreate(listOfDays)
       return updatedDays
     } catch (error) {
       throw boom.badRequest('No se pudo actualizar los días')

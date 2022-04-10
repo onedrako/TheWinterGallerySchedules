@@ -55,7 +55,7 @@ class Schedule extends Model {
       sequelize,
       tableName: SCHEDULE_TABLE,
       modelName: 'Schedule',
-      timeStamps: false
+      timestamps: false
     }
   }
 }

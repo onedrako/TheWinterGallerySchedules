@@ -4,7 +4,7 @@ const { models } = require('../libs/sequelize')
 class BackgroundServices {
   async getAll () {
     try {
-      const backgrounds = await models.Backgrounds.findAll()
+      const backgrounds = await models.Background.findAll()
       return backgrounds
     } catch (error) {
       throw boom.notFound('No hay fondos registrados')
@@ -13,7 +13,7 @@ class BackgroundServices {
 
   async getById (id) {
     try {
-      const background = await models.Backgrounds.findOne({
+      const background = await models.Background.findOne({
         where: {
           id
         }
@@ -26,7 +26,7 @@ class BackgroundServices {
 
   async create (background) {
     try {
-      const newBackground = await models.Backgrounds.create(background)
+      const newBackground = await models.Background.create(background)
       return newBackground
     } catch (error) {
       throw boom.badRequest('No se pudo crear el fondo')
@@ -35,7 +35,7 @@ class BackgroundServices {
 
   async updateOne (id, background) {
     try {
-      const updatedBackground = await models.Backgrounds.update(background, {
+      const updatedBackground = await models.Background.update(background, {
         where: {
           id
         }

@@ -1,7 +1,7 @@
 const Joi = require('joi')
 
 const id = Joi.number().integer()
-const date = Joi.date()
+const date = Joi.alternatives().try(Joi.date(), Joi.allow(null))
 const title = Joi.alternatives().try(Joi.string(), Joi.allow(null))
 const updatedBy = Joi.string()
 const noteId = Joi.alternatives().try(Joi.number().integer(), Joi.allow(null))

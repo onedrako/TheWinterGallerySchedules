@@ -33,15 +33,6 @@ const NoteSchema = {
 class Note extends Model {
   static associate (models) {
     this.hasMany(models.Day, { as: 'days', foreignKey: 'noteId' })
-
-    // this.belongsToMany(
-    //   models.Schedule,
-    //   {
-    //     as: 'schedules',
-    //     through: models.ScheduleNote,
-    //     foreignKey: 'noteId',
-    //     otherKey: 'scheduleId'
-    //   })
   }
 
   static config (sequelize) {
@@ -49,7 +40,7 @@ class Note extends Model {
       sequelize,
       tableName: NOTE_TABLE,
       modelName: 'Note',
-      timeStamps: false
+      timestamps: false
     }
   }
 }

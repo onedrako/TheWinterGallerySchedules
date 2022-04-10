@@ -4,7 +4,7 @@ const { models } = require('../libs/sequelize')
 class SchedulesService {
   async getAll () {
     try {
-      const schedules = await models.Schedules.findAll()
+      const schedules = await models.Schedule.findAll()
       return schedules
     } catch (error) {
       throw boom.notFound('No hay horarios registrados')
@@ -13,7 +13,7 @@ class SchedulesService {
 
   async getById (id) {
     try {
-      const schedule = await models.Schedules.findOne({
+      const schedule = await models.Schedule.findOne({
         where: {
           id
         }
@@ -26,7 +26,7 @@ class SchedulesService {
 
   async create (schedule) {
     try {
-      const newSchedule = await models.Schedules.create(schedule)
+      const newSchedule = await models.Schedule.create(schedule)
       return newSchedule
     } catch (error) {
       throw boom.badRequest('No se pudo crear el horario')
@@ -35,7 +35,7 @@ class SchedulesService {
 
   async updateOne (id, schedule) {
     try {
-      const updatedSchedule = await models.Schedules.update(schedule, {
+      const updatedSchedule = await models.Schedule.update(schedule, {
         where: {
           id
         }
@@ -48,7 +48,7 @@ class SchedulesService {
 
   async deleteOne (id) {
     try {
-      const deletedSchedule = await models.Schedules.destroy({
+      const deletedSchedule = await models.Schedule.destroy({
         where: {
           id
         }
