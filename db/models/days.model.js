@@ -56,7 +56,7 @@ const DaySchema = {
 }
 
 class Day extends Model {
-  static associations (models) {
+  static associate (models) {
     this.belongsTo(models.Schedule, { as: 'schedule' })
     this.belongsTo(models.Note, { as: 'note' })
   }

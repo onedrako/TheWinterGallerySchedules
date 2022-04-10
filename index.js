@@ -2,7 +2,7 @@ const express = require('express')
 const cors = require('cors')
 const passport = require('passport')
 const { config } = require('./config/config')
-// const routerApi = require('./routes')
+const routerApi = require('./routes')
 
 const app = express()
 const port = config.port
@@ -26,7 +26,7 @@ app.use(cors(corsOptions))
 // require('./utils/auth')
 // app.use(passport.initialize())
 
-// routerApi(app)
+routerApi(app)
 
 app.listen(port, () => {
   console.log(`Server listening on port ${port}`)

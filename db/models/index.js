@@ -1,8 +1,8 @@
-const { Day, DaySchema } = require('./day.model')
-const { Schedule, ScheduleSchema } = require('./schedule.model')
-const { Note, NoteSchema } = require('./note.model')
-const { ScheduleNote, ScheduleNoteSchema } = require('./schedule-note.model')
-const { Background, BackgroundSchema } = require('./background.model')
+const { Day, DaySchema } = require('./days.model')
+const { Schedule, ScheduleSchema } = require('./schedules.model')
+const { Note, NoteSchema } = require('./notes.model')
+const { ScheduleNote, ScheduleNoteSchema } = require('./schedules-notes.model')
+const { Background, BackgroundSchema } = require('./backgrounds.model')
 
 const setUpModels = (sequelize) => {
   Day.init(DaySchema, Day.config(sequelize))

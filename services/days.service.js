@@ -33,9 +33,9 @@ class DaysServices {
     }
   }
 
-  async updateOne (id, day) {
+  async updateOne (id, changes) {
     try {
-      const updatedDay = await models.Days.update(day, {
+      const updatedDay = await models.Days.update(changes, {
         where: {
           id
         }
