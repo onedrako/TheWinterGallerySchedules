@@ -11,6 +11,7 @@ const scheduleId = Joi.alternatives().try(Joi.number().integer(), Joi.allow(null
 
 const listOfDays = Joi.array().items(
   Joi.object({
+    id: id,
     date: date,
     title: title,
     updatedBy: updatedBy.required(),

@@ -25,7 +25,6 @@ class DaysServices {
   }
 
   async create (data) {
-    console.log(data)
     const response = await models.Day.create(data)
     return response
   }
@@ -45,7 +44,9 @@ class DaysServices {
 
   async updateAll (listOfDays) {
     try {
-      const updatedDays = await models.Day.bulkCreate(listOfDays)
+      const updatedDays = await models.Day.bulkCreate(listOfDays, {
+        updateOnDuplicate: ['date', 'title', 'updatedBy', 'noteId', 'scheduleId']
+      })
       return updatedDays
     } catch (error) {
       throw boom.badRequest('No se pudo actualizar los días')
