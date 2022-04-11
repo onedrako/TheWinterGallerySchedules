@@ -4,8 +4,9 @@ const usersRouter = require('./users.router')
 const daysRouter = require('./days.router')
 const notesRouter = require('./notes.router')
 const schedulesRouter = require('./schedules.router')
-const schedulesNotesRouter = require('./schedules-notes.router')
-const backgroundsRouter = require('./backgrounds.router')
+const daysSchedulesRouter = require('./days-schedules.router')
+const daysNotesRouter = require('./days-notes.router')
+const configsRouter = require('./configs.router')
 
 function routerApi (app) {
   const router = express.Router()
@@ -14,8 +15,9 @@ function routerApi (app) {
   router.use('/days', daysRouter)
   router.use('/notes', notesRouter)
   router.use('/schedules', schedulesRouter)
-  router.use('/schedules-notes', schedulesNotesRouter)
-  router.use('/backgrounds', backgroundsRouter)
+  router.use('/configs', configsRouter)
+  router.use('/days-schedules', daysSchedulesRouter)
+  router.use('/days-notes', daysNotesRouter)
 }
 
 module.exports = routerApi

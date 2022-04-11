@@ -1,0 +1,67 @@
+const express = require('express')
+const validatorHandler = require('./../middlewares/validator.handler')
+
+const DaysNotesService = require('./../services/days-notes.service')
+
+const router = express.Router()
+const service = new DaysNotesService()
+const { createDayNoteSchema, updateDayNoteSchema, getDayNoteSchema } = require('./../schemas/days-notes.schemas')
+
+router.get('/', async (req, res, next) => {
+  try {
+    const daysNotes = await service.getAll()
+    res.send(daysNotes)
+  } catch (err) {
+    next(err)
+  }
+})
+
+router.get('/:id',
+  validatorHandler(getDayNoteSchema),
+  async (req, res, next) => {
+    try {
+      const { id } = req.params
+      const dayNote = await service.getById(id)
+      res.send(dayNote)
+    } catch (err) {
+      next(err)
+    }
+  })
+
+router.post('/',
+  validatorHandler(createDayNoteSchema, 'body'),
+  async (req, res, next) => {
+    try {
+      const newDayNote = await service.create(req.body)
+      res.status(201).send(newDayNote)
+    } catch (err) {
+      next(err)
+    }
+  })
+
+router.patch('/:id',
+  validatorHandler(getDayNoteSchema, 'params'),
+  validatorHandler(updateDayNoteSchema, 'body'),
+  async (req, res, next) => {
+    try {
+      const { id } = req.params
+      const body = req.body
+      res.status(200).json(await service.updateOne(id, body))
+    } catch (err) {
+      next(err)
+    }
+  }
+)
+
+router.delete('/:id',
+  validatorHandler(getDayNoteSchema, 'params'),
+  async (req, res, next) => {
+    try {
+      const { id } = req.params
+      res.status(200).json(await service.deleteOne(id))
+    } catch (err) {
+      next(err)
+    }
+  })
+
+module.exports = router

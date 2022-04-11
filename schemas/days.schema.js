@@ -4,9 +4,6 @@ const id = Joi.number().integer()
 const date = Joi.alternatives().try(Joi.date(), Joi.allow(null))
 const title = Joi.alternatives().try(Joi.string(), Joi.allow(null))
 const updatedBy = Joi.string()
-
-// const listOfAllDays = Joi.object().items({ id, date, title, updatedBy, noteId, scheduleId })
-
 const listOfDays = Joi.array().items(
   Joi.object({
     id: id,

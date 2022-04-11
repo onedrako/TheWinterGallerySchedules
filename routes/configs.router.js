@@ -2,12 +2,12 @@ const express = require('express')
 const boom = require('@hapi/boom')
 const validatorHandler = require('./../middlewares/validator.handler')
 
-const BackgroundService = require('../services/background.service')
+const ConfigService = require('../services/configs.service')
 
-const { createBackgroundSchema, updateBackgroundSchema, getBackgroundSchema } = require('../schemas/backgrounds.schema')
+const { createConfigSchema, updateConfigSchema, getConfigSchema } = require('../schemas/configs.schema')
 
 const router = express.Router()
-const service = new BackgroundService()
+const service = new ConfigService()
 
 router.get('/', async (req, res, next) => {
   try {
@@ -22,7 +22,7 @@ router.get('/', async (req, res, next) => {
 })
 
 router.post('/',
-  validatorHandler(createBackgroundSchema),
+  validatorHandler(createConfigSchema),
   async (req, res, next) => {
     try {
       const background = await service.create(req.body)
@@ -33,8 +33,8 @@ router.post('/',
   })
 
 router.patch('/:id',
-  validatorHandler(getBackgroundSchema, 'params'),
-  validatorHandler(updateBackgroundSchema, 'body'), async (req, res, next) => {
+  validatorHandler(getConfigSchema, 'params'),
+  validatorHandler(updateConfigSchema, 'body'), async (req, res, next) => {
     try {
       const { id } = req.params
       const background = await service.updateOne(id, req.body)
