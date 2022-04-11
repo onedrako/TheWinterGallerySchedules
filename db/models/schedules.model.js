@@ -19,7 +19,7 @@ const ScheduleSchema = {
     type: DataTypes.TIME
   },
   finalTime: {
-    allowNull: false,
+    allowNull: true,
     field: 'final_time',
     type: DataTypes.TIME
   },
@@ -38,8 +38,6 @@ const ScheduleSchema = {
 
 class Schedule extends Model {
   static associate (models) {
-    this.hasMany(models.Day, { as: 'days', foreignKey: 'scheduleId' })
-
     this.belongsToMany(
       models.Note,
       {
@@ -47,6 +45,14 @@ class Schedule extends Model {
         through: models.ScheduleNote,
         foreignKey: 'scheduleId',
         otherKey: 'noteId'
+      })
+    this.belongsToMany(
+      models.Day,
+      {
+        as: 'schedule',
+        through: models.DaySchedule,
+        foreignKey: 'scheduleId',
+        otherKey: 'dayId'
       })
   }
 

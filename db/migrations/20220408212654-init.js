@@ -3,22 +3,38 @@
 const { DAY_TABLE } = require('../models/days.model')
 const { SCHEDULE_TABLE } = require('../models/schedules.model')
 const { NOTE_TABLE } = require('../models/notes.model')
-const { SCHEDULE_NOTE_TABLE } = require('../models/schedules-notes.model')
-const { BACKGROUND_TABLE } = require('../models/backgrounds.model')
+const { CONFIG_TABLE } = require('../models/config.model')
 const { USER_TABLE } = require('../models/users.model')
+const { SCHEDULE_NOTE_TABLE } = require('../models/schedules-notes.model')
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable(BACKGROUND_TABLE, {
+    await queryInterface.createTable(CONFIG_TABLE, {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.Sequelize.DataTypes.INTEGER
+        type: Sequelize.DataTypes.INTEGER
       },
-      url: {
+      backgroundImageUrl: {
         allowNull: true,
-        type: Sequelize.Sequelize.DataTypes.STRING
+        type: Sequelize.DataTypes.STRING
+      },
+      backgroundColor: {
+        allowNull: false,
+        type: Sequelize.DataTypes.STRING
+      },
+      mainTitlesColor: {
+        allowNull: false,
+        type: Sequelize.DataTypes.STRING
+      },
+      mainTextsColor: {
+        allowNull: false,
+        type: Sequelize.DataTypes.STRING
+      },
+      fontFamily: {
+        allowNull: true,
+        type: Sequelize.DataTypes.STRING
       }
     })
 
@@ -27,32 +43,32 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.Sequelize.DataTypes.INTEGER
+        type: Sequelize.DataTypes.INTEGER
       },
       title: {
         allowNull: false,
-        type: Sequelize.Sequelize.DataTypes.STRING
+        type: Sequelize.DataTypes.STRING
       },
       initialTime: {
         allowNull: false,
         field: 'initial_time',
-        type: Sequelize.Sequelize.DataTypes.TIME
+        type: Sequelize.DataTypes.TIME
       },
       finalTime: {
-        allowNull: false,
+        allowNull: true,
         field: 'final_time',
-        type: Sequelize.Sequelize.DataTypes.TIME
+        type: Sequelize.DataTypes.TIME
       },
       updatedAt: {
         allowNull: false,
         field: 'updated_at',
-        type: Sequelize.Sequelize.DataTypes.DATE,
+        type: Sequelize.DataTypes.DATE,
         defaultValue: Sequelize.NOW
       },
       updatedBy: {
         field: 'updated_by',
         allowNull: false,
-        type: Sequelize.Sequelize.DataTypes.STRING
+        type: Sequelize.DataTypes.STRING
       }
     })
 
@@ -61,26 +77,26 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.Sequelize.DataTypes.INTEGER
+        type: Sequelize.DataTypes.INTEGER
       },
       title: {
         allowNull: true,
-        type: Sequelize.Sequelize.DataTypes.STRING
+        type: Sequelize.DataTypes.STRING
       },
       comment: {
         allowNull: true,
-        type: Sequelize.Sequelize.DataTypes.STRING
+        type: Sequelize.DataTypes.STRING
       },
       updatedAt: {
         allowNull: false,
         field: 'updated_at',
-        type: Sequelize.Sequelize.DataTypes.DATE,
+        type: Sequelize.DataTypes.DATE,
         defaultValue: Sequelize.NOW
       },
       updatedBy: {
         field: 'updated_by',
         allowNull: false,
-        type: Sequelize.Sequelize.DataTypes.STRING
+        type: Sequelize.DataTypes.STRING
       }
     })
 
@@ -89,12 +105,12 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.Sequelize.DataTypes.INTEGER
+        type: Sequelize.DataTypes.INTEGER
       },
       scheduleId: {
         allowNull: false,
         field: 'schedule_id',
-        type: Sequelize.Sequelize.DataTypes.INTEGER,
+        type: Sequelize.DataTypes.INTEGER,
         references: {
           model: SCHEDULE_TABLE,
           key: 'id'
@@ -105,7 +121,7 @@ module.exports = {
       noteId: {
         allowNull: false,
         field: 'note_id',
-        type: Sequelize.Sequelize.DataTypes.INTEGER,
+        type: Sequelize.DataTypes.INTEGER,
         references: {
           model: NOTE_TABLE,
           key: 'id'
@@ -120,31 +136,31 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.Sequelize.DataTypes.INTEGER
+        type: Sequelize.DataTypes.INTEGER
       },
       date: {
-        type: Sequelize.Sequelize.DataTypes.DATEONLY,
+        type: Sequelize.DataTypes.DATEONLY,
         allowNull: true
       },
       title: {
-        type: Sequelize.Sequelize.DataTypes.STRING,
+        type: Sequelize.DataTypes.STRING,
         allowNull: true
       },
       updatedAt: {
         allowNull: false,
         field: 'updated_at',
         defaultValue: Sequelize.NOW,
-        type: Sequelize.Sequelize.DataTypes.DATE
+        type: Sequelize.DataTypes.DATE
       },
       updatedBy: {
         field: 'updated_by',
         allowNull: false,
-        type: Sequelize.Sequelize.DataTypes.STRING
+        type: Sequelize.DataTypes.STRING
       },
       scheduleId: {
         allowNull: true,
         field: 'schedule_id',
-        type: Sequelize.Sequelize.DataTypes.INTEGER,
+        type: Sequelize.DataTypes.INTEGER,
         references: {
           model: SCHEDULE_TABLE,
           key: 'id'
@@ -155,7 +171,7 @@ module.exports = {
       noteId: {
         allowNull: true,
         field: 'note_id',
-        type: Sequelize.Sequelize.DataTypes.INTEGER,
+        type: Sequelize.DataTypes.INTEGER,
         references: {
           model: NOTE_TABLE,
           key: 'id'
@@ -206,7 +222,7 @@ module.exports = {
   },
 
   down: async (queryInterface) => {
-    await queryInterface.dropTable(BACKGROUND_TABLE)
+    await queryInterface.dropTable(CONFIG_TABLE)
     await queryInterface.dropTable(DAY_TABLE)
     await queryInterface.dropTable(SCHEDULE_NOTE_TABLE)
     await queryInterface.dropTable(NOTE_TABLE)

@@ -1,10 +1,10 @@
 const { Model, DataTypes } = require('sequelize')
 const { SCHEDULE_TABLE } = require('./schedules.model')
-const { NOTE_TABLE } = require('./notes.model')
+const { DAY_TABLE } = require('./days.model')
 
-const SCHEDULE_NOTE_TABLE = 'schedule_notes'
+const DAY_SCHEDULE_TABLE = 'days_schedule'
 
-const ScheduleNoteSchema = {
+const DayScheduleSchema = {
   id: {
     allowNull: false,
     autoIncrement: true,
@@ -14,6 +14,17 @@ const ScheduleNoteSchema = {
   order: {
     allowNull: true,
     type: DataTypes.INTEGER
+  },
+  dayId: {
+    allowNull: false,
+    field: 'day_id',
+    type: DataTypes.INTEGER,
+    references: {
+      model: DAY_TABLE,
+      key: 'id'
+    },
+    onUpdate: 'CASCADE',
+    onDelete: 'CASCADE'
   },
   scheduleId: {
     allowNull: false,
@@ -26,32 +37,29 @@ const ScheduleNoteSchema = {
     onUpdate: 'CASCADE',
     onDelete: 'CASCADE'
   },
-  noteId: {
-    allowNull: false,
-    field: 'note_id',
-    type: DataTypes.INTEGER,
-    references: {
-      model: NOTE_TABLE,
-      key: 'id'
-    },
-    onUpdate: 'CASCADE',
-    onDelete: 'CASCADE'
+  titleColor: {
+    allowNull: true,
+    type: DataTypes.STRING
+  },
+  timeColor: {
+    allowNull: true,
+    type: DataTypes.STRING
   }
 }
 
-class ScheduleNote extends Model {
+class DaySchedule extends Model {
   static associate (models) {
-    //
+
   }
 
   static config (sequelize) {
     return {
       sequelize,
-      tableName: SCHEDULE_NOTE_TABLE,
-      modelName: 'ScheduleNote',
+      tableName: DAY_SCHEDULE_TABLE,
+      modelName: 'DaySchedule',
       timestamps: false
     }
   }
 }
 
-module.exports = { ScheduleNote, ScheduleNoteSchema, SCHEDULE_NOTE_TABLE }
+module.exports = { DaySchedule, DayScheduleSchema, DAY_SCHEDULE_TABLE }

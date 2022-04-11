@@ -1,8 +1,5 @@
 const { Model, DataTypes, Sequelize } = require('sequelize')
 
-const { SCHEDULE_TABLE } = require('./schedules.model')
-const { NOTE_TABLE } = require('./notes.model')
-
 const DAY_TABLE = 'days'
 
 const DaySchema = {
@@ -30,35 +27,25 @@ const DaySchema = {
     field: 'updated_by',
     allowNull: false,
     type: DataTypes.STRING
-  },
-  scheduleId: {
-    allowNull: true,
-    field: 'schedule_id',
-    type: DataTypes.INTEGER,
-    references: {
-      model: SCHEDULE_TABLE,
-      key: 'id'
-    },
-    onUpdate: 'CASCADE',
-    onDelete: 'SET NULL'
-  },
-  noteId: {
-    allowNull: true,
-    field: 'note_id',
-    type: DataTypes.INTEGER,
-    references: {
-      model: NOTE_TABLE,
-      key: 'id'
-    },
-    onUpdate: 'CASCADE',
-    onDelete: 'SET NULL'
   }
 }
 
 class Day extends Model {
   static associate (models) {
-    this.belongsTo(models.Schedule, { as: 'schedule' })
-    this.belongsTo(models.Note, { as: 'note' })
+    this.belongsToMany(
+      models.Note,
+      {
+        through: models.DaySchedule,
+        foreignKey: 'dayId',
+        otherKey: 'noteId'
+      })
+    this.belongsToMany(
+      models.Schedule,
+      {
+        through: models.DayNote,
+        foreignKey: 'dayId',
+        otherKey: 'scheduleId'
+      })
   }
 
   static config (sequelize) {

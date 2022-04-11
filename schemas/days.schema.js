@@ -4,8 +4,6 @@ const id = Joi.number().integer()
 const date = Joi.alternatives().try(Joi.date(), Joi.allow(null))
 const title = Joi.alternatives().try(Joi.string(), Joi.allow(null))
 const updatedBy = Joi.string()
-const noteId = Joi.alternatives().try(Joi.number().integer(), Joi.allow(null))
-const scheduleId = Joi.alternatives().try(Joi.number().integer(), Joi.allow(null))
 
 // const listOfAllDays = Joi.object().items({ id, date, title, updatedBy, noteId, scheduleId })
 
@@ -14,25 +12,19 @@ const listOfDays = Joi.array().items(
     id: id,
     date: date,
     title: title,
-    updatedBy: updatedBy.required(),
-    noteId: noteId,
-    scheduleId: scheduleId
+    updatedBy: updatedBy.required()
   })
 )
 
 const createDaySchema = Joi.object({
   date: date.required(),
   title: title.default(null),
-  noteId: noteId.default(null),
-  scheduleId: scheduleId.default(null),
   updatedBy: updatedBy.required()
 })
 
 const updateDaySchema = Joi.object({
   date: date,
   title: title,
-  noteId: noteId,
-  scheduleId: scheduleId,
   updatedBy: updatedBy.required()
 })
 
