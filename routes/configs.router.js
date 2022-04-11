@@ -13,7 +13,7 @@ router.get('/', async (req, res, next) => {
   try {
     const backgrounds = await service.getAll()
     if (!backgrounds[0]) {
-      throw boom.notFound('No se encontraron fondos')
+      throw boom.notFound('No se encontraron configuraciones')
     }
     res.send(backgrounds[0])
   } catch (err) {

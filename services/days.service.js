@@ -4,7 +4,9 @@ const { models } = require('../libs/sequelize')
 class DaysServices {
   async getAll () {
     try {
-      const days = await models.Day.findAll()
+      const days = await models.Day.findAll({
+        include: ['notes', 'schedules']
+      })
       return days
     } catch (error) {
       throw boom.notFound('No hay días registrados')
@@ -16,7 +18,8 @@ class DaysServices {
       const day = await models.Day.findOne({
         where: {
           id
-        }
+        },
+        include: ['notes', 'schedules']
       })
       if (day) {
         return day
