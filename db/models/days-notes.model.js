@@ -2,7 +2,7 @@ const { Model, DataTypes } = require('sequelize')
 const { DAY_TABLE } = require('./days.model')
 const { NOTE_TABLE } = require('./notes.model')
 
-const DAY_NOTE_TABLE = 'days_schedule'
+const DAY_NOTE_TABLE = 'days_note'
 
 const DayNoteSchema = {
   id: {

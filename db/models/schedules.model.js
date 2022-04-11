@@ -39,14 +39,6 @@ const ScheduleSchema = {
 class Schedule extends Model {
   static associate (models) {
     this.belongsToMany(
-      models.Note,
-      {
-        as: 'notes',
-        through: models.ScheduleNote,
-        foreignKey: 'scheduleId',
-        otherKey: 'noteId'
-      })
-    this.belongsToMany(
       models.Day,
       {
         as: 'schedule',

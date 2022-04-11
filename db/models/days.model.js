@@ -37,14 +37,14 @@ class Day extends Model {
       {
         through: models.DaySchedule,
         foreignKey: 'dayId',
-        otherKey: 'noteId'
+        otherKey: 'scheduleId'
       })
     this.belongsToMany(
       models.Schedule,
       {
         through: models.DayNote,
         foreignKey: 'dayId',
-        otherKey: 'scheduleId'
+        otherKey: 'noteId'
       })
   }
 

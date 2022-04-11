@@ -3,9 +3,10 @@
 const { DAY_TABLE } = require('../models/days.model')
 const { SCHEDULE_TABLE } = require('../models/schedules.model')
 const { NOTE_TABLE } = require('../models/notes.model')
-const { CONFIG_TABLE } = require('../models/config.model')
+const { CONFIG_TABLE } = require('../models/configs.model')
 const { USER_TABLE } = require('../models/users.model')
-const { SCHEDULE_NOTE_TABLE } = require('../models/schedules-notes.model')
+const { DAY_NOTE_TABLE } = require('../models/days-notes.model')
+const { DAY_SCHEDULE_TABLE } = require('../models/days-schedules.model')
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
@@ -100,37 +101,6 @@ module.exports = {
       }
     })
 
-    await queryInterface.createTable(SCHEDULE_NOTE_TABLE, {
-      id: {
-        allowNull: false,
-        autoIncrement: true,
-        primaryKey: true,
-        type: Sequelize.DataTypes.INTEGER
-      },
-      scheduleId: {
-        allowNull: false,
-        field: 'schedule_id',
-        type: Sequelize.DataTypes.INTEGER,
-        references: {
-          model: SCHEDULE_TABLE,
-          key: 'id'
-        },
-        onUpdate: 'CASCADE',
-        onDelete: 'CASCADE'
-      },
-      noteId: {
-        allowNull: false,
-        field: 'note_id',
-        type: Sequelize.DataTypes.INTEGER,
-        references: {
-          model: NOTE_TABLE,
-          key: 'id'
-        },
-        onUpdate: 'CASCADE',
-        onDelete: 'CASCADE'
-      }
-    })
-
     await queryInterface.createTable(DAY_TABLE, {
       id: {
         allowNull: false,
@@ -156,28 +126,6 @@ module.exports = {
         field: 'updated_by',
         allowNull: false,
         type: Sequelize.DataTypes.STRING
-      },
-      scheduleId: {
-        allowNull: true,
-        field: 'schedule_id',
-        type: Sequelize.DataTypes.INTEGER,
-        references: {
-          model: SCHEDULE_TABLE,
-          key: 'id'
-        },
-        onUpdate: 'CASCADE',
-        onDelete: 'SET NULL'
-      },
-      noteId: {
-        allowNull: true,
-        field: 'note_id',
-        type: Sequelize.DataTypes.INTEGER,
-        references: {
-          model: NOTE_TABLE,
-          key: 'id'
-        },
-        onUpdate: 'CASCADE',
-        onDelete: 'SET NULL'
       }
     })
 
@@ -219,14 +167,101 @@ module.exports = {
         defaultValue: Sequelize.NOW
       }
     })
+
+    await queryInterface.createTable(DAY_NOTE_TABLE, {
+      id: {
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+        type: Sequelize.DataTypes.INTEGER
+      },
+      order: {
+        allowNull: true,
+        type: Sequelize.DataTypes.INTEGER
+      },
+      dayId: {
+        allowNull: false,
+        field: 'day_id',
+        type: Sequelize.DataTypes.INTEGER,
+        references: {
+          model: DAY_TABLE,
+          key: 'id'
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE'
+      },
+      noteId: {
+        allowNull: false,
+        field: 'note_id',
+        type: Sequelize.DataTypes.INTEGER,
+        references: {
+          model: NOTE_TABLE,
+          key: 'id'
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE'
+      },
+      titleColor: {
+        allowNull: true,
+        type: Sequelize.DataTypes.STRING
+      },
+      commentColor: {
+        allowNull: true,
+        type: Sequelize.DataTypes.STRING
+      }
+    })
+
+    await queryInterface.createTable(DAY_SCHEDULE_TABLE, {
+      id: {
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+        type: Sequelize.DataTypes.INTEGER
+      },
+      order: {
+        allowNull: true,
+        type: Sequelize.DataTypes.INTEGER
+      },
+      dayId: {
+        allowNull: false,
+        field: 'day_id',
+        type: Sequelize.DataTypes.INTEGER,
+        references: {
+          model: DAY_TABLE,
+          key: 'id'
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE'
+      },
+      scheduleId: {
+        allowNull: false,
+        field: 'schedule_id',
+        type: Sequelize.DataTypes.INTEGER,
+        references: {
+          model: SCHEDULE_TABLE,
+          key: 'id'
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE'
+      },
+      titleColor: {
+        allowNull: true,
+        type: Sequelize.DataTypes.STRING
+      },
+      timeColor: {
+        allowNull: true,
+        type: Sequelize.DataTypes.STRING
+      }
+    })
   },
 
   down: async (queryInterface) => {
+    await queryInterface.dropTable(DAY_SCHEDULE_TABLE)
+    await queryInterface.dropTable(DAY_NOTE_TABLE)
     await queryInterface.dropTable(CONFIG_TABLE)
-    await queryInterface.dropTable(DAY_TABLE)
-    await queryInterface.dropTable(SCHEDULE_NOTE_TABLE)
     await queryInterface.dropTable(NOTE_TABLE)
     await queryInterface.dropTable(SCHEDULE_TABLE)
     await queryInterface.dropTable(USER_TABLE)
+    await queryInterface.dropTable(DAY_TABLE)
   }
 }
