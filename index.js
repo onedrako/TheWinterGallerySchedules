@@ -11,7 +11,7 @@ const { logErrors, errorHandler, boomErrorHandler, ormErrorHandler } = require('
 
 app.use(express.json())
 
-const whiteList = ['http://localhost:3000', 'http://localhost:3005']
+const whiteList = ['http://localhost:3000', 'http://localhost:3001', 'http://localhost:3005']
 
 const corsOptions = {
   origin: (origin, callback) => {

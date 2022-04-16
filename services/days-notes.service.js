@@ -7,7 +7,7 @@ class DaysNotes {
       const daysSchedules = await models.DayNote.findAll()
       return daysSchedules
     } catch (error) {
-      throw boom.notFound('No hay horarios registrados')
+      throw boom.notFound('No hay datos')
     }
   }
 

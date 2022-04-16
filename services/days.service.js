@@ -5,7 +5,7 @@ class DaysServices {
   async getAll () {
     try {
       const days = await models.Day.findAll({
-        include: ['notes', 'schedules']
+        include: ['schedules', 'notes']
       })
       return days
     } catch (error) {

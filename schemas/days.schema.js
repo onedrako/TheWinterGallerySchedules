@@ -14,7 +14,7 @@ const listOfDays = Joi.array().items(
 )
 
 const createDaySchema = Joi.object({
-  date: date.required(),
+  date: date,
   title: title.default(null),
   updatedBy: updatedBy.required()
 })
