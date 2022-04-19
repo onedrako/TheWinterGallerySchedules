@@ -16,6 +16,8 @@ const setUpModels = (sequelize) => {
   Day.associate(sequelize.models)
   Schedule.associate(sequelize.models)
   Note.associate(sequelize.models)
+  DaySchedule.associate(sequelize.models)
+  DayNote.associate(sequelize.models)
 }
 
 module.exports = setUpModels

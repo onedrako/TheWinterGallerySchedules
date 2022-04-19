@@ -21,7 +21,7 @@ router.get('/:id',
   async (req, res, next) => {
     try {
       const { id } = req.params
-      const dayNote = await service.getById(id)
+      const dayNote = await service.getByDayId(id)
       res.send(dayNote)
     } catch (err) {
       next(err)

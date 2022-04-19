@@ -11,12 +11,13 @@ class DaysSchedule {
     }
   }
 
-  async getById (id) {
+  async getByDayId (id) {
     try {
-      const daySchedule = await models.DaySchedule.findOne({
+      const daySchedule = await models.DaySchedule.findAll({
         where: {
-          id
-        }
+          dayId: id
+        },
+        include: 'schedule'
       })
       return daySchedule
     } catch (error) {

@@ -1,11 +1,11 @@
 const Joi = require('joi')
 
 const id = Joi.number().integer()
-const order = Joi.number().integer()
+const order = Joi.alternatives().try(Joi.number().integer(), Joi.allow(null))
 const dayId = Joi.number().integer()
 const scheduleId = Joi.number().integer()
-const titleColor = Joi.string()
-const timeColor = Joi.string()
+const titleColor = Joi.alternatives().try(Joi.string(), Joi.allow(null))
+const timeColor = Joi.alternatives().try(Joi.string(), Joi.allow(null))
 
 const createDayScheduleSchema = Joi.object({
   order: order,

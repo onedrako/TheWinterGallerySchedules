@@ -49,7 +49,16 @@ const DayScheduleSchema = {
 
 class DaySchedule extends Model {
   static associate (models) {
-
+    this.hasMany(models.Day, {
+      as: 'day',
+      foreignKey: 'id',
+      sourceKey: 'dayId'
+    })
+    this.hasMany(models.Schedule, {
+      as: 'schedule',
+      foreignKey: 'id',
+      sourceKey: 'scheduleId'
+    })
   }
 
   static config (sequelize) {

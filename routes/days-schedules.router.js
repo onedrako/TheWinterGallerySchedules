@@ -21,7 +21,7 @@ router.get('/:id',
   async (req, res, next) => {
     try {
       const { id } = req.params
-      const daySchedule = await service.getById(id)
+      const daySchedule = await service.getByDayId(id)
       res.send(daySchedule)
     } catch (err) {
       next(err)
