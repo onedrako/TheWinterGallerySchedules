@@ -47,6 +47,17 @@ class DaysNotes {
     }
   }
 
+  async updateAll (listOfDaysSchedules) {
+    try {
+      const updatedDaysSchedules = await models.DayNote.bulkCreate(listOfDaysSchedules, {
+        updateOnDuplicate: ['order']
+      })
+      return updatedDaysSchedules
+    } catch (error) {
+      throw boom.badRequest('No se pudo actualizar los horarios', error)
+    }
+  }
+
   async deleteOne (id) {
     try {
       const deletedDaySchedule = await models.DayNote.destroy({

@@ -9,7 +9,9 @@ const commentColor = Joi.alternatives().try(Joi.string(), Joi.allow(null))
 const listOfDaysNotes = Joi.array().items(
   Joi.object({
     id: id.required(),
-    order: order
+    order: order,
+    dayId: dayId,
+    noteId: noteId
   })
 )
 

@@ -9,7 +9,9 @@ const timeColor = Joi.alternatives().try(Joi.string(), Joi.allow(null))
 const listOfDaysSchedules = Joi.array().items(
   Joi.object({
     id,
-    order: order
+    order: order,
+    dayId,
+    scheduleId
   })
 )
 
