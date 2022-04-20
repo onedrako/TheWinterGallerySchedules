@@ -5,7 +5,13 @@ const DaysNotesService = require('./../services/days-notes.service')
 
 const router = express.Router()
 const service = new DaysNotesService()
-const { createDayNoteSchema, updateDayNoteSchema, updateAllDaysNotesSchema, getDayNoteSchema } = require('./../schemas/days-notes.schemas')
+const {
+  createDayNoteSchema,
+  updateDayNoteSchema,
+  updateAllDaysNotesSchema,
+  getDayNoteSchema,
+  deleteDaysNotesByDayId
+} = require('./../schemas/days-notes.schemas')
 
 router.get('/', async (req, res, next) => {
   try {
@@ -71,6 +77,17 @@ router.delete('/:id',
     try {
       const { id } = req.params
       res.status(200).json(await service.deleteOne(id))
+    } catch (err) {
+      next(err)
+    }
+  })
+
+router.delete('/day/:dayId',
+  validatorHandler(deleteDaysNotesByDayId, 'params'),
+  async (req, res, next) => {
+    try {
+      const { dayId } = req.params
+      res.status(200).json(await service.deleteAllRelationsForDay(dayId))
     } catch (err) {
       next(err)
     }

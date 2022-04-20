@@ -39,4 +39,8 @@ const getDayNoteSchema = Joi.object({
   id: id.required()
 })
 
-module.exports = { createDayNoteSchema, updateDayNoteSchema, updateAllDaysNotesSchema, getDayNoteSchema }
+const deleteDaysNotesByDayId = Joi.object({
+  dayId: dayId.required()
+})
+
+module.exports = { createDayNoteSchema, updateDayNoteSchema, updateAllDaysNotesSchema, getDayNoteSchema, deleteDaysNotesByDayId }

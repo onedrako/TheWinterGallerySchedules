@@ -5,7 +5,13 @@ const DaysSchedulesService = require('./../services/days-schedules.service')
 
 const router = express.Router()
 const service = new DaysSchedulesService()
-const { createDayScheduleSchema, updateDayScheduleSchema, updateAllDaysSchedulesSchema, getDayScheduleSchema } = require('./../schemas/days-schedules.schemas')
+const {
+  createDayScheduleSchema,
+  getDayScheduleSchema,
+  updateDayScheduleSchema,
+  updateAllDaysSchedulesSchema,
+  deleteDaysSchedulesByDayId
+} = require('./../schemas/days-schedules.schemas')
 
 router.get('/', async (req, res, next) => {
   try {
@@ -71,6 +77,17 @@ router.delete('/:id',
     try {
       const { id } = req.params
       res.status(200).json(await service.deleteOne(id))
+    } catch (err) {
+      next(err)
+    }
+  })
+
+router.delete('/day/:dayId',
+  validatorHandler(deleteDaysSchedulesByDayId, 'params'),
+  async (req, res, next) => {
+    try {
+      const { dayId } = req.params
+      res.status(200).json(await service.deleteAllRelationsForDay(dayId))
     } catch (err) {
       next(err)
     }

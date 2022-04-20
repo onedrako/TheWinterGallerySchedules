@@ -70,6 +70,17 @@ class DaysSchedule {
       throw boom.badRequest('No se pudo eliminar el horario')
     }
   }
+
+  async deleteAllRelationsForDay (dayId) {
+    try {
+      const deletedDaysSchedules = await models.DaySchedule.destroy({
+        where: { dayId }
+      })
+      return deletedDaysSchedules
+    } catch (error) {
+      throw boom.badRequest('No se pudo eliminar los horarios')
+    }
+  }
 }
 
 module.exports = DaysSchedule
