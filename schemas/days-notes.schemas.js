@@ -6,6 +6,12 @@ const dayId = Joi.number().integer()
 const noteId = Joi.number().integer()
 const titleColor = Joi.alternatives().try(Joi.string(), Joi.allow(null))
 const commentColor = Joi.alternatives().try(Joi.string(), Joi.allow(null))
+const listOfDaysNotes = Joi.array().items(
+  Joi.object({
+    id: id.required(),
+    order: order
+  })
+)
 
 const createDayNoteSchema = Joi.object({
   order: order,
@@ -23,8 +29,12 @@ const updateDayNoteSchema = Joi.object({
   commentColor: commentColor
 })
 
+const updateAllDaysNotesSchema = Joi.object({
+  listOfDaysNotes: listOfDaysNotes.required()
+})
+
 const getDayNoteSchema = Joi.object({
   id: id.required()
 })
 
-module.exports = { createDayNoteSchema, updateDayNoteSchema, getDayNoteSchema }
+module.exports = { createDayNoteSchema, updateDayNoteSchema, updateAllDaysNotesSchema, getDayNoteSchema }

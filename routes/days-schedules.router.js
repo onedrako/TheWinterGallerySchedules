@@ -5,7 +5,7 @@ const DaysSchedulesService = require('./../services/days-schedules.service')
 
 const router = express.Router()
 const service = new DaysSchedulesService()
-const { createDayScheduleSchema, updateDayScheduleSchema, getDayScheduleSchema } = require('./../schemas/days-schedules.schemas')
+const { createDayScheduleSchema, updateDayScheduleSchema, updateAllDaysSchedulesSchema, getDayScheduleSchema } = require('./../schemas/days-schedules.schemas')
 
 router.get('/', async (req, res, next) => {
   try {
@@ -47,6 +47,18 @@ router.patch('/:id',
       const { id } = req.params
       const body = req.body
       res.status(200).json(await service.updateOne(id, body))
+    } catch (err) {
+      next(err)
+    }
+  }
+)
+
+router.patch('/',
+  validatorHandler(updateAllDaysSchedulesSchema, 'body'),
+  async (req, res, next) => {
+    try {
+      const { listOfDaysSchedules } = req.body
+      res.status(200).json(await service.updateAll(listOfDaysSchedules))
     } catch (err) {
       next(err)
     }
