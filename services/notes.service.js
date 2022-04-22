@@ -4,10 +4,12 @@ const { models } = require('../libs/sequelize')
 class NotesServices {
   async getAll () {
     try {
-      const notes = await models.Note.findAll()
+      const notes = await models.Note.findAll({
+        include: ['days']
+      })
       return notes
     } catch (error) {
-      throw boom.notFound('No hay notas registrados')
+      throw boom.notFound(error)
     }
   }
 
@@ -16,11 +18,12 @@ class NotesServices {
       const note = await models.Note.findOne({
         where: {
           id
-        }
+        },
+        include: ['days']
       })
       return note
     } catch (error) {
-      throw boom.notFound('No se encontró la nota')
+      throw boom.notFound(error)
     }
   }
 

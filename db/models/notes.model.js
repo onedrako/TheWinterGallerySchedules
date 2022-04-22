@@ -35,7 +35,7 @@ class Note extends Model {
     this.belongsToMany(
       models.Day,
       {
-        as: 'note',
+        as: 'days',
         through: models.DayNote,
         foreignKey: 'noteId',
         otherKey: 'dayId'

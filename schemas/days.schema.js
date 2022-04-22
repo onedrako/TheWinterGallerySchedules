@@ -4,12 +4,14 @@ const id = Joi.number().integer()
 const date = Joi.alternatives().try(Joi.date(), Joi.allow(null))
 const title = Joi.alternatives().try(Joi.string(), Joi.allow(null))
 const updatedBy = Joi.string()
+const updatedAt = Joi.date()
 const listOfDays = Joi.array().items(
   Joi.object({
     id: id,
     date: date,
     title: title,
-    updatedBy: updatedBy.required()
+    updatedBy: updatedBy.required(),
+    updatedAt: updatedAt
   })
 )
 

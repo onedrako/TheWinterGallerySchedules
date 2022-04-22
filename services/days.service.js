@@ -52,7 +52,7 @@ class DaysServices {
   async updateAll (listOfDays) {
     try {
       const updatedDays = await models.Day.bulkCreate(listOfDays, {
-        updateOnDuplicate: ['date', 'title', 'updatedBy', 'noteId', 'scheduleId']
+        updateOnDuplicate: ['date', 'title', 'updatedBy', 'noteId', 'scheduleId', 'updatedAt']
       })
       return updatedDays
     } catch (error) {
