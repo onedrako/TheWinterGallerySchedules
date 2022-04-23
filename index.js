@@ -25,8 +25,8 @@ const corsOptions = {
 
 app.use(cors(corsOptions))
 
-// require('./utils/auth')
-// app.use(passport.initialize())
+require('./utils/auth')
+app.use(passport.initialize())
 
 routerApi(app)
 

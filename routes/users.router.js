@@ -38,7 +38,7 @@ router.get('/user/:nickName',
   }
 )
 
-router.get('/profile',
+router.get('/profile/:id',
   passport.authenticate('jwt', { session: false }),
   async (req, res, next) => {
     try {
