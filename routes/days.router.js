@@ -1,5 +1,8 @@
 const express = require('express')
+const passport = require('passport')
+
 const validatorHandler = require('./../middlewares/validator.handler')
+const { checkAdminRole } = require('./../middlewares/authHandler')
 
 const DaysService = require('./../services/days.service')
 
@@ -7,14 +10,15 @@ const router = express.Router()
 const service = new DaysService()
 const { createDaySchema, updateDaySchema, updateAllDaysSchema, getDaySchema } = require('./../schemas/days.schema')
 
-router.get('/', async (req, res, next) => {
-  try {
-    const days = await service.getAll()
-    res.send(days)
-  } catch (err) {
-    next(err)
-  }
-})
+router.get('/',
+  async (req, res, next) => {
+    try {
+      const days = await service.getAll()
+      res.send(days)
+    } catch (err) {
+      next(err)
+    }
+  })
 
 router.get('/:id',
   validatorHandler(getDaySchema),
@@ -29,6 +33,8 @@ router.get('/:id',
   })
 
 router.post('/',
+  passport.authenticate('jwt', { session: false }),
+  checkAdminRole,
   validatorHandler(createDaySchema, 'body'),
   async (req, res, next) => {
     try {
@@ -41,6 +47,8 @@ router.post('/',
   })
 
 router.patch('/:id',
+  passport.authenticate('jwt', { session: false }),
+  checkAdminRole,
   validatorHandler(getDaySchema, 'params'),
   validatorHandler(updateDaySchema, 'body'),
   async (req, res, next) => {
@@ -55,6 +63,8 @@ router.patch('/:id',
 )
 
 router.patch('/',
+  passport.authenticate('jwt', { session: false }),
+  checkAdminRole,
   validatorHandler(updateAllDaysSchema, 'body'),
   async (req, res, next) => {
     try {

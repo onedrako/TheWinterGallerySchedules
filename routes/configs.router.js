@@ -1,6 +1,9 @@
 const express = require('express')
+const passport = require('passport')
 const boom = require('@hapi/boom')
+
 const validatorHandler = require('./../middlewares/validator.handler')
+const { checkAdminRole } = require('./../middlewares/authHandler')
 
 const ConfigService = require('../services/configs.service')
 
@@ -9,19 +12,22 @@ const { createConfigSchema, updateConfigSchema, getConfigSchema } = require('../
 const router = express.Router()
 const service = new ConfigService()
 
-router.get('/', async (req, res, next) => {
-  try {
-    const backgrounds = await service.getAll()
-    if (!backgrounds[0]) {
-      throw boom.notFound('No se encontraron configuraciones')
+router.get('/',
+  async (req, res, next) => {
+    try {
+      const backgrounds = await service.getAll()
+      if (!backgrounds[0]) {
+        throw boom.notFound('No se encontraron configuraciones')
+      }
+      res.send(backgrounds[0])
+    } catch (err) {
+      next(err)
     }
-    res.send(backgrounds[0])
-  } catch (err) {
-    next(err)
-  }
-})
+  })
 
 router.post('/',
+  passport.authenticate('jwt', { session: false }),
+  checkAdminRole,
   validatorHandler(createConfigSchema),
   async (req, res, next) => {
     try {
@@ -33,6 +39,8 @@ router.post('/',
   })
 
 router.patch('/:id',
+  passport.authenticate('jwt', { session: false }),
+  checkAdminRole,
   validatorHandler(getConfigSchema, 'params'),
   validatorHandler(updateConfigSchema, 'body'), async (req, res, next) => {
     try {

@@ -1,5 +1,8 @@
 const express = require('express')
+const passport = require('passport')
+
 const validatorHandler = require('./../middlewares/validator.handler')
+const { checkAdminRole } = require('./../middlewares/authHandler')
 
 const DaysSchedulesService = require('./../services/days-schedules.service')
 
@@ -13,14 +16,15 @@ const {
   deleteDaysSchedulesByDayId
 } = require('./../schemas/days-schedules.schemas')
 
-router.get('/', async (req, res, next) => {
-  try {
-    const daysSchedules = await service.getAll()
-    res.send(daysSchedules)
-  } catch (err) {
-    next(err)
-  }
-})
+router.get('/',
+  async (req, res, next) => {
+    try {
+      const daysSchedules = await service.getAll()
+      res.send(daysSchedules)
+    } catch (err) {
+      next(err)
+    }
+  })
 
 router.get('/:id',
   validatorHandler(getDayScheduleSchema),
@@ -35,6 +39,8 @@ router.get('/:id',
   })
 
 router.post('/',
+  passport.authenticate('jwt', { session: false }),
+  checkAdminRole,
   validatorHandler(createDayScheduleSchema, 'body'),
   async (req, res, next) => {
     try {
@@ -46,6 +52,8 @@ router.post('/',
   })
 
 router.patch('/:id',
+  passport.authenticate('jwt', { session: false }),
+  checkAdminRole,
   validatorHandler(getDayScheduleSchema, 'params'),
   validatorHandler(updateDayScheduleSchema, 'body'),
   async (req, res, next) => {
@@ -60,6 +68,8 @@ router.patch('/:id',
 )
 
 router.patch('/',
+  passport.authenticate('jwt', { session: false }),
+  checkAdminRole,
   validatorHandler(updateAllDaysSchedulesSchema, 'body'),
   async (req, res, next) => {
     try {
@@ -72,6 +82,8 @@ router.patch('/',
 )
 
 router.delete('/:id',
+  passport.authenticate('jwt', { session: false }),
+  checkAdminRole,
   validatorHandler(getDayScheduleSchema, 'params'),
   async (req, res, next) => {
     try {
@@ -83,6 +95,8 @@ router.delete('/:id',
   })
 
 router.delete('/day/:dayId',
+  passport.authenticate('jwt', { session: false }),
+  checkAdminRole,
   validatorHandler(deleteDaysSchedulesByDayId, 'params'),
   async (req, res, next) => {
     try {

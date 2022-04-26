@@ -1,5 +1,8 @@
 const express = require('express')
+const passport = require('passport')
+
 const validatorHandler = require('./../middlewares/validator.handler')
+const { checkAdminRole } = require('./../middlewares/authHandler')
 
 const SchedulesService = require('./../services/schedules.service')
 
@@ -8,6 +11,8 @@ const service = new SchedulesService()
 const { createScheduleSchema, updateScheduleSchema, getScheduleSchema } = require('./../schemas/schedules.schema')
 
 router.get('/',
+  passport.authenticate('jwt', { session: false }),
+  checkAdminRole,
   async (req, res, next) => {
     try {
       const data = await service.getAll()
@@ -19,6 +24,8 @@ router.get('/',
 )
 
 router.get('/:id',
+  passport.authenticate('jwt', { session: false }),
+  checkAdminRole,
   validatorHandler(getScheduleSchema, 'params'),
   async (req, res, next) => {
     try {
@@ -36,6 +43,8 @@ router.get('/:id',
   })
 
 router.post('/',
+  passport.authenticate('jwt', { session: false }),
+  checkAdminRole,
   validatorHandler(createScheduleSchema),
   async (req, res, next) => {
     try {
@@ -47,6 +56,8 @@ router.post('/',
   })
 
 router.patch('/:id',
+  passport.authenticate('jwt', { session: false }),
+  checkAdminRole,
   validatorHandler(getScheduleSchema, 'params'),
   validatorHandler(updateScheduleSchema, 'body'),
   async (req, res, next) => {
@@ -60,6 +71,8 @@ router.patch('/:id',
   })
 
 router.delete('/:id',
+  passport.authenticate('jwt', { session: false }),
+  checkAdminRole,
   validatorHandler(getScheduleSchema, 'params'),
   async (req, res, next) => {
     try {

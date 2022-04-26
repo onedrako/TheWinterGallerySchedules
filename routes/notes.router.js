@@ -1,23 +1,31 @@
 const express = require('express')
+const passport = require('passport')
+const boom = require('@hapi/boom')
+
+const { checkAdminRole } = require('./../middlewares/authHandler')
 const validatorHandler = require('./../middlewares/validator.handler')
 
 const NotesService = require('./../services/notes.service')
 
 const router = express.Router()
-const boom = require('@hapi/boom')
 const service = new NotesService()
 const { createNoteSchema, updateNoteSchema, getNoteSchema } = require('./../schemas/notes.schema')
 
-router.get('/', async (req, res, next) => {
-  try {
-    const notes = await service.getAll()
-    res.send(notes)
-  } catch (err) {
-    next(err)
-  }
-})
+router.get('/',
+  passport.authenticate('jwt', { session: false }),
+  checkAdminRole,
+  async (req, res, next) => {
+    try {
+      const notes = await service.getAll()
+      res.send(notes)
+    } catch (err) {
+      next(err)
+    }
+  })
 
 router.get('/:id',
+  passport.authenticate('jwt', { session: false }),
+  checkAdminRole,
   validatorHandler(getNoteSchema, 'params'),
   async (req, res, next) => {
     try {
@@ -33,6 +41,8 @@ router.get('/:id',
   })
 
 router.post('/',
+  passport.authenticate('jwt', { session: false }),
+  checkAdminRole,
   validatorHandler(createNoteSchema, 'body'),
   async (req, res, next) => {
     try {
@@ -44,6 +54,8 @@ router.post('/',
   })
 
 router.patch('/:id',
+  passport.authenticate('jwt', { session: false }),
+  checkAdminRole,
   validatorHandler(updateNoteSchema, 'body'),
   async (req, res, next) => {
     try {
@@ -56,6 +68,8 @@ router.patch('/:id',
   })
 
 router.delete('/:id',
+  passport.authenticate('jwt', { session: false }),
+  checkAdminRole,
   validatorHandler(getNoteSchema, 'params'),
   async (req, res, next) => {
     try {
