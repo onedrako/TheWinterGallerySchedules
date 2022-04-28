@@ -11,7 +11,7 @@ const { logErrors, errorHandler, boomErrorHandler, ormErrorHandler } = require('
 
 app.use(express.json())
 
-const whiteList = [config.frontendUrl, config.localhost, 'https://thewintergallery.vercel.app/']
+const whiteList = [config.frontendUrl, config.localhost, 'https://thewintergallery.vercel.app/', 'https://thewintergallery-7t4c9vwbg-onedrako.vercel.app/']
 console.log(`whiteList: ${whiteList}`)
 
 const corsOptions = {
