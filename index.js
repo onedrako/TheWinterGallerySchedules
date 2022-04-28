@@ -11,18 +11,18 @@ const { logErrors, errorHandler, boomErrorHandler, ormErrorHandler } = require('
 
 app.use(express.json())
 
-const whitelist = [config.frontendUrl, config.localhost, 'https://thewintergallery.vercel.app/', 'https://thewintergallery-7t4c9vwbg-onedrako.vercel.app/']
+// const whitelist = [config.frontendUrl, config.localhost, 'https://thewintergallery.vercel.app/', 'https://thewintergallery-7t4c9vwbg-onedrako.vercel.app/']
 
-const options = {
-  origin: (origin, callback) => {
-    if (whitelist.includes(origin) || !origin) {
-      callback(null, true)
-    } else {
-      callback(new Error('No estas autorizado'))
-    }
-  }
-}
-app.use(cors(options))
+// const options = {
+//   origin: (origin, callback) => {
+//     if (whitelist.includes(origin) || !origin) {
+//       callback(null, true)
+//     } else {
+//       callback(new Error('No estas autorizado'))
+//     }
+//   }
+// }
+app.use(cors({ origin: '*' }))
 
 require('./utils/auth')
 app.use(passport.initialize())
