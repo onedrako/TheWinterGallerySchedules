@@ -9,7 +9,7 @@ const config = {
   jwtSecret: process.env.JWT_SECRET,
   smtpEmail: process.env.SMTP_MAIL,
   smtpPassword: process.env.SMTP_PASS,
-  whitelist: process.env.WHITELIST
+  frontendUrl: process.env.FRONTEND_URL
 }
 
 module.exports = { config }
