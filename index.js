@@ -12,11 +12,10 @@ const { logErrors, errorHandler, boomErrorHandler, ormErrorHandler } = require('
 app.use(express.json())
 
 const whiteList = [config.frontendUrl, config.localhost, 'https://thewintergallery.vercel.app/', 'https://thewintergallery-7t4c9vwbg-onedrako.vercel.app/']
-console.log(`whiteList: ${whiteList}`)
 
 const corsOptions = {
   origin: (origin, callback) => {
-    if (whiteList.includes(origin) || !origin) {
+    if (whiteList.includes(origin)) {
       callback(null, true)
     } else {
       callback(new Error('Not estas autorizado'))
